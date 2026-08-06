@@ -9,7 +9,7 @@
 | Item            | Details                                      |
 | --------------- | -------------------------------------------- |
 | **Project**     | Student Performance Prediction               |
-| **Project No.** | 240                                          |
+| **Project No.** | 001                                        |
 | **Category**    | Mini Project                                 |
 | **Difficulty**  | ⭐ Beginner                                   |
 | **AI Domain**   | Machine Learning (Regression)                |
