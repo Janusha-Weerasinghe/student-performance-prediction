@@ -546,7 +546,7 @@ No evidence of severe multicollinearity was observed, indicating that all numeri
 ---
 
 
-## Outlier Analysis
+## 12 Outlier Analysis
 
 Outlier detection was performed using boxplots and the Interquartile Range (IQR) method for all numerical features.
 
@@ -575,10 +575,121 @@ The detected outliers appear to represent genuine observations rather than data 
 
 The impact of these observations will be evaluated during model training. If necessary, robust algorithms or feature transformations may be considered instead of removing valid data.
 
+---
+# Feature Relationships
+
+## Objective
+
+Analyze the relationship between the most important numerical features and the target variable (**Exam_Score**) to determine whether they have predictive value for the regression model.
+
+The following relationships were analyzed:
+
+* Hours Studied vs Exam Score
+* Attendance vs Exam Score
+* Previous Scores vs Exam Score
+
+---
+
+# 1. Hours Studied vs Exam Score
+
+## Visualization
+
+* Scatter Plot
+* Regression Plot
+
+## Observation
+
+* The scatter plot indicates a **positive linear relationship** between **Hours_Studied** and **Exam_Score**.
+* Students who studied for more hours generally achieved higher examination scores.
+* Most observations follow the regression line with only a small amount of variation.
+* No significant outliers were observed.
+
+## Interpretation
+
+The positive slope of the regression line suggests that increasing study hours is associated with improved academic performance.
+
+## Business Insight
+
+Study time appears to be one of the strongest predictors of examination performance and should be retained during feature selection.
+
+## Conclusion
+
+✅ Keep **Hours_Studied** as an input feature for model training.
+
+---
+
+# 2. Attendance vs Exam Score
+
+## Visualization
+
+* Scatter Plot
+* Regression Plot
+
+## Observation
+
+* Attendance demonstrates a **moderate positive relationship** with **Exam_Score**.
+* Students with higher attendance percentages generally achieve better examination results.
+* The observations show more variation around the regression line compared to **Hours_Studied**.
+* No abnormal patterns or extreme outliers were identified.
+
+## Interpretation
+
+Regular attendance contributes positively to student performance, although it is not the only factor affecting examination scores.
+
+## Business Insight
+
+Attendance provides useful information for predicting academic performance and should be included in the regression model.
+
+## Conclusion
+
+✅ Keep **Attendance** as an input feature for model training.
+
+---
+
+# 3. Previous Scores vs Exam Score
+
+## Visualization
+
+* Scatter Plot
+* Regression Plot
+
+## Observation
+
+* Previous Scores show a **strong positive relationship** with **Exam_Score**.
+* Students with higher previous academic scores generally perform better in the final examination.
+* The regression line follows a clear upward trend.
+* The data exhibits moderate variability, indicating that additional factors also influence final performance.
+
+## Interpretation
+
+Previous academic achievement is a valuable indicator of future performance.
+
+## Business Insight
+
+Previous Scores are expected to contribute significantly to the predictive performance of the regression model.
+
+## Conclusion
+
+✅ Keep **Previous_Scores** as an important predictive feature.
+
+---
+
+# Overall Analysis
+
 ## Key Findings
 
-...
+* Hours Studied has a clear positive relationship with Exam Score.
+* Attendance has a moderate positive relationship with Exam Score.
+* Previous Scores have a strong positive relationship with Exam Score.
+* None of the analyzed features show a negative relationship with the target variable.
+* No significant outliers or unusual patterns were observed.
 
-## Recommended Preprocessing
+---
 
-...
+# Business Summary
+
+The analysis demonstrates that academic behaviour and previous performance are closely related to examination outcomes.
+
+These variables are expected to improve the predictive capability of the machine learning model and should therefore be retained during feature engineering and model development.
+
+---
