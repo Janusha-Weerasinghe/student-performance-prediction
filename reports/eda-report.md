@@ -548,7 +548,32 @@ No evidence of severe multicollinearity was observed, indicating that all numeri
 
 ## Outlier Analysis
 
-...
+Outlier detection was performed using boxplots and the Interquartile Range (IQR) method for all numerical features.
+
+### Results
+
+| Feature | Outliers |
+|---------|----------|
+| Hours_Studied | 43 |
+| Attendance | 0 |
+| Sleep_Hours | 0 |
+| Previous_Scores | 0 |
+| Tutoring_Sessions | 430 |
+| Physical_Activity | 0 |
+| Exam_Score | 104 |
+
+### Observations
+
+- Hours_Studied contains a small number of extreme observations.
+- Attendance, Sleep_Hours, Previous_Scores, and Physical_Activity do not contain significant outliers.
+- Tutoring_Sessions contains a large number of statistical outliers due to its right-skewed distribution.
+- Exam_Score includes several unusually high and low values that are likely valid student performances.
+
+### Conclusion
+
+The detected outliers appear to represent genuine observations rather than data entry errors. Therefore, no outliers were removed during the exploratory data analysis stage.
+
+The impact of these observations will be evaluated during model training. If necessary, robust algorithms or feature transformations may be considered instead of removing valid data.
 
 ## Key Findings
 
