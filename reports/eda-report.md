@@ -1,21 +1,100 @@
-# Exploratory Data Analysis Report
+# 📊 Exploratory Data Analysis (EDA) Report
 
-## Dataset Overview
+**Project:** Student Performance Prediction
 
-...
+**Project Number:** 001
+
+**Author:** Janusha Weerasinghe
+
+**Date:** 06-Aug-2026
+
+---
+
+# 1. Objective
+
+The objective of Exploratory Data Analysis (EDA) is to understand the dataset before building machine learning models. This analysis helps identify data quality issues, understand feature distributions, detect missing values, identify outliers, and discover relationships between variables.
+
+---
+# 2. Dataset Overview
+
+| Item | Value |
+|------|------|
+| Dataset Name | Student Performance Factors |
+| Total Records | 6,607 |
+| Total Features | 20 |
+| Target Variable | Exam_Score |
+| Machine Learning Task | Regression |
+
+---
+
+# 3. Dataset Shape
+
+## Rows
+
+6,607
+
+## Columns
+
+20 Features + 1 Target Variable
+
+### Observation
+
+- The dataset contains a sufficient number of records for regression analysis.
+- The dataset size is appropriate for training and evaluating multiple machine learning models.
+
+---
+
+# 4. Dataset Information
+
+### Data Types
+
+| Data Type | Count |
+|-----------|------:|
+| Integer | (Update after df.info()) |
+| Float | (Update after df.info()) |
+| Object | 13 |
+
+### Observation
+
+- The dataset contains both numerical and categorical variables.
+- Categorical variables will require encoding before model training.
+
+---
+
+# 6. Missing Values Analysis
 
 ## Missing Values
 
-...
+| Feature | Missing Values |
+|---------|---------------:|
+| Teacher_Quality | 78 |
+| Parental_Education_Level | 90 |
+| Distance_from_Home | 67 |
 
-## Duplicate Rows
+### Observation
 
-...
+- Only three categorical features contain missing values.
+- The percentage of missing values is relatively low.
+- Missing values will be handled during preprocessing.
 
-## Target Variable
-# 4. Target Variable Analysis
+---
 
-## 4.1 Objective
+# 7. Duplicate Records
+
+### Result
+
+0 Duplicate Rows
+
+### Observation
+
+No duplicate records were found.
+
+---
+
+
+# 8. Target Variable Analysis
+
+## 8.1 Objective
 
 The objective of this analysis is to understand the characteristics and distribution of the target variable (`Exam_Score`). Since this project focuses on predicting students' examination scores using regression models, it is essential to analyze the target variable before model development.
 
@@ -30,7 +109,7 @@ The analysis includes:
 
 ---
 
-## 4.2 Target Variable
+## 8.2 Target Variable
 
 | Property | Value |
 |----------|-------|
@@ -40,7 +119,7 @@ The analysis includes:
 
 ---
 
-## 4.3 Summary Statistics
+## 8.3 Summary Statistics
 
 | Statistic | Value |
 |-----------|------:|
@@ -65,7 +144,7 @@ The median score (**67**) is very close to the mean (**67.24**), indicating that
 
 ---
 
-## 4.4 Histogram Analysis
+## 8.4 Histogram Analysis
 
 **Figure**
 
@@ -86,7 +165,7 @@ The histogram indicates that the majority of students achieved average examinati
 
 ---
 
-## 4.5 Kernel Density Estimation (KDE)
+## 8.5 Kernel Density Estimation (KDE)
 
 **Figure**
 
@@ -107,7 +186,7 @@ The KDE plot confirms that the target variable does not perfectly follow a norma
 
 ---
 
-## 4.6 Boxplot Analysis
+## 8.6 Boxplot Analysis
 
 **Figure**
 
@@ -130,7 +209,7 @@ The majority of examination scores fall within a relatively narrow range, indica
 
 ---
 
-## 4.7 Skewness Analysis
+## 8.7 Skewness Analysis
 
 | Metric | Value |
 |--------|------:|
@@ -144,7 +223,7 @@ The calculated skewness value of **1.6448** suggests a noticeable right skew, me
 
 ---
 
-## 4.8 Kurtosis Analysis
+## 8.8 Kurtosis Analysis
 
 | Metric | Value |
 |--------|------:|
@@ -158,7 +237,7 @@ This suggests that the dataset contains heavier tails and more extreme values th
 
 ---
 
-## 4.9 Key Findings
+## 8.9 Key Findings
 
 - The target variable (`Exam_Score`) is continuous, confirming that this is a **regression problem**.
 - The average examination score is **67.24**, with relatively low variability.
@@ -170,7 +249,7 @@ This suggests that the dataset contains heavier tails and more extreme values th
 
 ---
 
-## 4.10 Conclusion
+## 8.10 Conclusion
 
 The target variable (`Exam_Score`) was analyzed using descriptive statistics, histogram, KDE, boxplot, skewness, and kurtosis.
 
@@ -185,7 +264,7 @@ The majority of students achieve average examination scores, while only a small 
 
 ---
 
-## Numerical Feature Analysis
+## 9. Numerical Feature Analysis
 
 ### Features Analysed
 
@@ -293,9 +372,41 @@ Histograms were used to understand the distribution of each feature, while boxpl
 
 ...
 
-## Categorical Features
+# 10. Categorical Feature Analysis
 
-...
+## Total Categorical Features
+
+13
+
+### Summary
+
+| Feature | Unique Values | Missing Values | Most Common Category | Frequency |
+|---------|--------------:|---------------:|----------------------|----------:|
+| Parental_Involvement | 3 | 0 | Medium | 3362 |
+| Access_to_Resources | 3 | 0 | Medium | 3319 |
+| Extracurricular_Activities | 2 | 0 | Yes | 3938 |
+| Motivation_Level | 3 | 0 | Medium | 3351 |
+| Internet_Access | 2 | 0 | Yes | 6108 |
+| Family_Income | 3 | 0 | Low | 2672 |
+| Teacher_Quality | 3 | 78 | Medium | 3925 |
+| School_Type | 2 | 0 | Public | 4598 |
+| Peer_Influence | 3 | 0 | Positive | 2638 |
+| Learning_Disabilities | 2 | 0 | No | 5912 |
+| Parental_Education_Level | 3 | 90 | High School | 3223 |
+| Distance_from_Home | 3 | 67 | Near | 3884 |
+| Gender | 2 | 0 | Male | 3814 |
+
+
+### Key Findings
+
+- The dataset contains 13 categorical features.
+- Three categorical features contain missing values.
+- Most features have only two or three categories.
+- Internet_Access is highly imbalanced toward "Yes".
+- School_Type is dominated by Public schools.
+- Gender distribution is reasonably balanced.
+
+---
 
 ## Correlation Analysis
 
