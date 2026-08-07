@@ -407,10 +407,144 @@ Histograms were used to understand the distribution of each feature, while boxpl
 - Gender distribution is reasonably balanced.
 
 ---
+# 11. Correlation Analysis
 
-## Correlation Analysis
+## Objective
 
-...
+The objective of correlation analysis is to measure the strength and direction of the linear relationship between numerical features and the target variable (`Exam_Score`). This helps identify the most influential predictors, detect multicollinearity, and support feature selection for machine learning.
+
+---
+
+## Methodology
+
+Pearson Correlation Coefficient was calculated for all numerical features using:
+
+```python
+corr = df.corr(numeric_only=True)
+```
+
+The results were visualized using a correlation heatmap.
+
+---
+
+## Correlation Matrix
+
+The numerical features included in the analysis were:
+
+- Hours_Studied
+- Attendance
+- Sleep_Hours
+- Previous_Scores
+- Tutoring_Sessions
+- Physical_Activity
+- Exam_Score
+
+---
+
+## Correlation with Target Variable (Exam_Score)
+
+| Feature | Correlation | Interpretation |
+|---------|------------:|---------------|
+| Attendance | **0.5811** | Moderate Positive |
+| Hours_Studied | **0.4455** | Moderate Positive |
+| Previous_Scores | **0.1751** | Weak Positive |
+| Tutoring_Sessions | **0.1565** | Weak Positive |
+| Physical_Activity | **0.0278** | Very Weak Positive |
+| Sleep_Hours | **-0.0170** | Very Weak Negative |
+
+---
+
+## Key Findings
+
+### 1. Attendance
+
+Attendance has the strongest positive correlation with Exam_Score (0.581).
+
+This suggests that students with higher attendance generally achieve better examination scores.
+
+---
+
+### 2. Hours Studied
+
+Hours_Studied has the second strongest correlation (0.446).
+
+This indicates that spending more time studying is associated with improved academic performance.
+
+---
+
+### 3. Previous Scores
+
+Previous_Scores has a weak positive relationship (0.175).
+
+Although previous academic performance contributes to predicting exam scores, its influence is relatively smaller compared to attendance and study hours.
+
+---
+
+### 4. Tutoring Sessions
+
+Tutoring_Sessions has a weak positive correlation (0.157).
+
+Students attending tutoring sessions tend to perform slightly better, but tutoring alone is not a strong predictor.
+
+---
+
+### 5. Physical Activity
+
+Physical_Activity shows an almost negligible positive correlation (0.028).
+
+Based on this dataset, physical activity appears to have minimal direct influence on examination performance.
+
+---
+
+### 6. Sleep Hours
+
+Sleep_Hours has a very weak negative correlation (-0.017).
+
+The relationship is extremely close to zero, suggesting that sleep duration alone does not significantly influence exam scores in this dataset.
+
+---
+
+## Feature Relationships
+
+The strongest predictors of Exam_Score are:
+
+1. Attendance
+2. Hours_Studied
+3. Previous_Scores
+4. Tutoring_Sessions
+
+These variables are expected to contribute the most during model training.
+
+---
+
+## Multicollinearity Analysis
+
+No pair of independent numerical variables exhibits a strong correlation (greater than ±0.80).
+
+This indicates that multicollinearity is not a significant concern for the numerical features in this dataset.
+
+---
+
+## Business Interpretation
+
+The analysis suggests that academic engagement plays a greater role in predicting examination performance than lifestyle-related factors.
+
+Students who attend classes regularly and spend more time studying are generally more likely to achieve higher examination scores.
+
+Educational institutions may therefore improve student outcomes by promoting regular attendance and effective study habits.
+
+---
+
+## Conclusion
+
+The correlation analysis reveals that **Attendance** and **Hours_Studied** are the most influential numerical predictors of student examination performance.
+
+The remaining numerical variables show weak or negligible correlations with the target variable. However, these features may still improve prediction accuracy when combined with categorical variables in machine learning models.
+
+No evidence of severe multicollinearity was observed, indicating that all numerical features can be retained for the preprocessing and model development stages.
+
+---
+
 
 ## Outlier Analysis
 
