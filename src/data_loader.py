@@ -1,7 +1,5 @@
 """Utilities for loading project datasets."""
 
-"""Utilities for loading project datasets."""
-
 from pathlib import Path
 
 import pandas as pd
