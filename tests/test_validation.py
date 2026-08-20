@@ -83,3 +83,24 @@ def test_validate_dataset_rejects_duplicates() -> None:
         match="duplicate rows",
     ):
         validate_dataset(df)
+        
+def test_validate_dataset_accepts_unknown_categorical_value() -> None:
+    """Unknown categories should be allowed by validation."""
+    df = create_valid_dataframe()
+
+    df.loc[0, "Gender"] = "Unknown"
+
+    validate_dataset(df)
+
+
+def test_validate_dataset_rejects_invalid_categorical_dtype() -> None:
+    """Categorical features with numeric dtypes should raise TypeError."""
+    df = create_valid_dataframe()
+
+    df["Gender"] = [123, 456]
+
+    with pytest.raises(
+        TypeError,
+        match="invalid dtypes",
+    ):
+        validate_dataset(df)
