@@ -86,7 +86,7 @@ def validate_categorical_features(df: pd.DataFrame) -> None:
         if not (
             pd.api.types.is_object_dtype(df[column])
             or pd.api.types.is_string_dtype(df[column])
-            or pd.api.types.is_categorical_dtype(df[column])
+            or isinstance(df[column].dtype, pd.CategoricalDtype)
         )
     ]
 
@@ -94,7 +94,6 @@ def validate_categorical_features(df: pd.DataFrame) -> None:
         raise TypeError(
             f"Categorical features with invalid dtypes: {invalid_features}"
         )
-
 
 def validate_duplicates(df: pd.DataFrame) -> None:
     """Validate that the dataset does not contain duplicate rows."""
