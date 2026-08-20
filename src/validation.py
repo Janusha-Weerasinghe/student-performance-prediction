@@ -1,6 +1,6 @@
 ﻿"""Dataset validation utilities."""
 
-import pandas as pd #Because our validator receives a Pandas:
+import pandas as pd
 
 
 TARGET_COLUMN = "Exam_Score"
@@ -29,8 +29,6 @@ CATEGORICAL_FEATURES = [
     "Distance_from_Home",
     "Gender",
 ]
-#df is expected to be a Pandas DataFrame.
-# -> None is If validation succeeds, this function doesn't return a value.
 
 EXPECTED_COLUMNS = (
     NUMERICAL_FEATURES
@@ -80,6 +78,24 @@ def validate_numerical_features(df: pd.DataFrame) -> None:
         )
 
 
+def validate_categorical_features(df: pd.DataFrame) -> None:
+    """Validate categorical feature data types."""
+    invalid_features = [
+        column
+        for column in CATEGORICAL_FEATURES
+        if not (
+            pd.api.types.is_object_dtype(df[column])
+            or pd.api.types.is_string_dtype(df[column])
+            or pd.api.types.is_categorical_dtype(df[column])
+        )
+    ]
+
+    if invalid_features:
+        raise TypeError(
+            f"Categorical features with invalid dtypes: {invalid_features}"
+        )
+
+
 def validate_duplicates(df: pd.DataFrame) -> None:
     """Validate that the dataset does not contain duplicate rows."""
     duplicate_count = df.duplicated().sum()
@@ -95,4 +111,6 @@ def validate_dataset(df: pd.DataFrame) -> None:
     validate_required_columns(df)
     validate_target(df)
     validate_numerical_features(df)
+    validate_categorical_features(df)
     validate_duplicates(df)
+
