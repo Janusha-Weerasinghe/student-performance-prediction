@@ -3,7 +3,7 @@
 import pandas as pd
 
 from sklearn.impute import SimpleImputer
-from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
 #from src.preprocessing import split_features_target
 
@@ -18,6 +18,13 @@ from src.validation import (
 )
 
 from src.preprocessing import (
+    create_numerical_pipeline,
+    split_features_target,
+    split_train_test,
+)
+
+from src.preprocessing import (
+    create_categorical_pipeline,
     create_numerical_pipeline,
     split_features_target,
     split_train_test,
@@ -120,3 +127,26 @@ def test_create_numerical_pipeline() -> None:
         pipeline.named_steps["scaler"],
         StandardScaler,
     )
+
+def test_create_categorical_pipeline() -> None:
+    """Verify that the categorical preprocessing pipeline is configured correctly."""
+    pipeline = create_categorical_pipeline()
+
+    assert list(pipeline.named_steps.keys()) == [
+        "imputer",
+        "encoder",
+    ]
+
+    assert isinstance(
+        pipeline.named_steps["imputer"],
+        SimpleImputer,
+    )
+
+    assert pipeline.named_steps["imputer"].strategy == "most_frequent"
+
+    assert isinstance(
+        pipeline.named_steps["encoder"],
+        OneHotEncoder,
+    )
+
+    assert pipeline.named_steps["encoder"].handle_unknown == "ignore"

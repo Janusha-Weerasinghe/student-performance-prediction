@@ -11,6 +11,10 @@ from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
 
 
+# 04.3.2 — Categorical preprocessing
+from sklearn.preprocessing import OneHotEncoder, StandardScaler
+
+
 def split_features_target(
     df: pd.DataFrame,
 ) -> tuple[pd.DataFrame, pd.Series]:
@@ -69,5 +73,20 @@ def create_numerical_pipeline() -> Pipeline:
         steps=[
             ("imputer", SimpleImputer(strategy="median")),
             ("scaler", StandardScaler()),
+        ]
+    )
+
+def create_categorical_pipeline() -> Pipeline:
+    """Create the preprocessing pipeline for categorical features."""
+    return Pipeline(
+        steps=[
+            (
+                "imputer",
+                SimpleImputer(strategy="most_frequent"),
+            ),
+            (
+                "encoder",
+                OneHotEncoder(handle_unknown="ignore"),
+            ),
         ]
     )
