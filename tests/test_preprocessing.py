@@ -5,31 +5,40 @@ import pandas as pd
 from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
+from sklearn.compose import ColumnTransformer
+
 #from src.preprocessing import split_features_target
 
-from src.preprocessing import (
-    split_features_target,
-    split_train_test,
-)
+# from src.preprocessing import (
+#     split_features_target,
+#     split_train_test,
+# )
 from src.validation import (
     CATEGORICAL_FEATURES,
     NUMERICAL_FEATURES,
     TARGET_COLUMN,
 )
 
-from src.preprocessing import (
-    create_numerical_pipeline,
-    split_features_target,
-    split_train_test,
-)
+# from src.preprocessing import (
+#     create_numerical_pipeline,
+#     split_features_target,
+#     split_train_test,
+# )
+
+# from src.preprocessing import (
+#     create_categorical_pipeline,
+#     create_numerical_pipeline,
+#     split_features_target,
+#     split_train_test,
+# )
 
 from src.preprocessing import (
     create_categorical_pipeline,
     create_numerical_pipeline,
+    create_preprocessor,
     split_features_target,
     split_train_test,
 )
-
 def create_valid_dataframe() -> pd.DataFrame:
     """Create a minimal valid DataFrame for preprocessing tests."""
     data = {}
@@ -150,3 +159,34 @@ def test_create_categorical_pipeline() -> None:
     )
 
     assert pipeline.named_steps["encoder"].handle_unknown == "ignore"
+
+def test_create_preprocessor() -> None:
+    """Verify that numerical and categorical pipelines are combined correctly."""
+    preprocessor = create_preprocessor()
+
+    assert isinstance(
+        preprocessor,
+        ColumnTransformer,
+    )
+
+    assert len(preprocessor.transformers) == 2
+
+    transformer_names = [
+        name
+        for name, _, _ in preprocessor.transformers
+    ]
+
+    assert transformer_names == [
+        "numerical",
+        "categorical",
+    ]
+
+def test_preprocessor_uses_correct_feature_groups() -> None:
+    """Verify that each pipeline receives the correct feature columns."""
+    preprocessor = create_preprocessor()
+
+    numerical_columns = preprocessor.transformers[0][2]
+    categorical_columns = preprocessor.transformers[1][2]
+
+    assert numerical_columns == NUMERICAL_FEATURES
+    assert categorical_columns == CATEGORICAL_FEATURES

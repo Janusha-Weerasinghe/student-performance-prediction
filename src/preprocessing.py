@@ -3,7 +3,7 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
-from src.validation import TARGET_COLUMN
+# from src.validation import TARGET_COLUMN
 
 #04.3.1 — Numerical preprocessing
 from sklearn.impute import SimpleImputer
@@ -13,6 +13,15 @@ from sklearn.preprocessing import StandardScaler
 
 # 04.3.2 — Categorical preprocessing
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
+
+# 04.3.3 - Column Transformer
+from sklearn.compose import ColumnTransformer
+
+from src.validation import (
+    CATEGORICAL_FEATURES,
+    NUMERICAL_FEATURES,
+    TARGET_COLUMN,
+)
 
 
 def split_features_target(
@@ -87,6 +96,26 @@ def create_categorical_pipeline() -> Pipeline:
             (
                 "encoder",
                 OneHotEncoder(handle_unknown="ignore"),
+            ),
+        ]
+    )
+
+def create_preprocessor() -> ColumnTransformer:
+    """Create the complete preprocessing transformer."""
+    numerical_pipeline = create_numerical_pipeline()
+    categorical_pipeline = create_categorical_pipeline()
+
+    return ColumnTransformer(
+        transformers=[
+            (
+                "numerical",
+                numerical_pipeline,
+                NUMERICAL_FEATURES,
+            ),
+            (
+                "categorical",
+                categorical_pipeline,
+                CATEGORICAL_FEATURES,
             ),
         ]
     )
