@@ -41,11 +41,22 @@ from src.validation import (
 # )
 
 # 04.3.4.2 — Test it
+# from src.preprocessing import (
+#     create_categorical_pipeline,
+#     create_numerical_pipeline,
+#     create_preprocessor,
+#     fit_preprocessor,
+#     split_features_target,
+#     split_train_test,
+# )
+
+# 04.3.5
 from src.preprocessing import (
     create_categorical_pipeline,
     create_numerical_pipeline,
     create_preprocessor,
     fit_preprocessor,
+    get_feature_names,
     split_features_target,
     split_train_test,
 )
@@ -244,3 +255,28 @@ def test_fit_preprocessor_handles_missing_values() -> None:
 
     assert X_train_processed.shape[0] == len(X_train)
     assert X_test_processed.shape[0] == len(X_test)
+
+
+def test_get_feature_names() -> None:
+    """Verify that the fitted preprocessor returns feature names."""
+    df = create_valid_dataframe()
+
+    df = pd.concat([df] * 10, ignore_index=True)
+
+    X, y = split_features_target(df)
+
+    X_train, X_test, _, _ = split_train_test(X, y)
+
+    preprocessor = create_preprocessor()
+
+    fit_preprocessor(
+        preprocessor,
+        X_train,
+        X_test,
+    )
+
+    feature_names = get_feature_names(preprocessor)
+
+    assert isinstance(feature_names, list)
+    assert len(feature_names) > len(NUMERICAL_FEATURES)
+    assert all(isinstance(name, str) for name in feature_names)
