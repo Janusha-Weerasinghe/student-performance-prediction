@@ -5,6 +5,11 @@ from sklearn.model_selection import train_test_split
 
 from src.validation import TARGET_COLUMN
 
+#04.3.1 — Numerical preprocessing
+from sklearn.impute import SimpleImputer
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler
+
 
 def split_features_target(
     df: pd.DataFrame,
@@ -57,3 +62,12 @@ def split_train_test(
     )
 
     return X_train, X_test, y_train, y_test
+
+def create_numerical_pipeline() -> Pipeline:
+    """Create the preprocessing pipeline for numerical features."""
+    return Pipeline(
+        steps=[
+            ("imputer", SimpleImputer(strategy="median")),
+            ("scaler", StandardScaler()),
+        ]
+    )
