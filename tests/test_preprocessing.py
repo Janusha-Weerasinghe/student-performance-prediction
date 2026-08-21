@@ -1,6 +1,7 @@
 """Tests for preprocessing utilities."""
 
 import pandas as pd
+import pytest
 
 from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
@@ -51,6 +52,18 @@ from src.validation import (
 # )
 
 # 04.3.5
+# from src.preprocessing import (
+#     create_categorical_pipeline,
+#     create_numerical_pipeline,
+#     create_preprocessor,
+#     fit_preprocessor,
+#     get_feature_names,
+#     split_features_target,
+#     split_train_test,
+# )
+
+
+# 04.3.6
 from src.preprocessing import (
     create_categorical_pipeline,
     create_numerical_pipeline,
@@ -59,6 +72,7 @@ from src.preprocessing import (
     get_feature_names,
     split_features_target,
     split_train_test,
+    validate_transformed_data,
 )
 
 def create_valid_dataframe() -> pd.DataFrame:
@@ -280,3 +294,56 @@ def test_get_feature_names() -> None:
     assert isinstance(feature_names, list)
     assert len(feature_names) > len(NUMERICAL_FEATURES)
     assert all(isinstance(name, str) for name in feature_names)
+
+def test_validate_transformed_data() -> None:
+    """Verify that train and test have compatible feature dimensions."""
+    df = create_valid_dataframe()
+
+    df = pd.concat([df] * 10, ignore_index=True)
+
+    X, y = split_features_target(df)
+
+    X_train, X_test, _, _ = split_train_test(X, y)
+
+    preprocessor = create_preprocessor()
+
+    X_train_processed, X_test_processed = fit_preprocessor(
+        preprocessor,
+        X_train,
+        X_test,
+    )
+
+    validate_transformed_data(
+        X_train_processed,
+        X_test_processed,
+    )
+
+# 4.3.6 Step 03 Test mismatched dimensions
+def test_validate_transformed_data_rejects_mismatched_features() -> None:
+    """Verify that mismatched train/test feature counts are rejected."""
+    df = create_valid_dataframe()
+
+    df = pd.concat([df] * 10, ignore_index=True)
+
+    X, y = split_features_target(df)
+
+    X_train, X_test, _, _ = split_train_test(X, y)
+
+    preprocessor = create_preprocessor()
+
+    X_train_processed, X_test_processed = fit_preprocessor(
+        preprocessor,
+        X_train,
+        X_test,
+    )
+
+    X_test_processed = X_test_processed[:, :-1]
+
+    with pytest.raises(
+        ValueError,
+        match="same number of features",
+    ):
+        validate_transformed_data(
+            X_train_processed,
+            X_test_processed,
+        )

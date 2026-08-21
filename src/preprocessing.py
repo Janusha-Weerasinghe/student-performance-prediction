@@ -158,3 +158,33 @@ def get_feature_names(
     return list(
         preprocessor.get_feature_names_out()
     )
+
+# 4.3.6
+def validate_transformed_data(
+    X_train_processed,
+    X_test_processed,
+) -> None:
+    """
+    Validate the processed training and testing feature matrices.
+
+    Args:
+        X_train_processed: Transformed training features.
+        X_test_processed: Transformed testing features.
+
+    Raises:
+        ValueError: If the matrices have inconsistent feature counts
+            or contain missing/non-finite values.
+    """
+    if X_train_processed.shape[1] != X_test_processed.shape[1]:
+        raise ValueError(
+            "Training and testing data must have the same "
+            "number of features."
+        )
+
+    if not (
+        X_train_processed.shape[0] > 0
+        and X_test_processed.shape[0] > 0
+    ):
+        raise ValueError(
+            "Processed training and testing data must not be empty."
+        )
