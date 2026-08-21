@@ -119,3 +119,26 @@ def create_preprocessor() -> ColumnTransformer:
             ),
         ]
     )
+
+# 04.3.4.1 — Add a helper function
+def fit_preprocessor(
+    preprocessor: ColumnTransformer,
+    X_train: pd.DataFrame,
+    X_test: pd.DataFrame,
+) -> tuple:
+    """
+    Fit the preprocessor using training data and transform
+    both training and testing data.
+
+    Args:
+        preprocessor: Configured ColumnTransformer.
+        X_train: Training feature data.
+        X_test: Testing feature data.
+
+    Returns:
+        Transformed training and testing feature matrices.
+    """
+    X_train_processed = preprocessor.fit_transform(X_train)
+    X_test_processed = preprocessor.transform(X_test)
+
+    return X_train_processed, X_test_processed

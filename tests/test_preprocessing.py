@@ -32,13 +32,24 @@ from src.validation import (
 #     split_train_test,
 # )
 
+# from src.preprocessing import (
+#     create_categorical_pipeline,
+#     create_numerical_pipeline,
+#     create_preprocessor,
+#     split_features_target,
+#     split_train_test,
+# )
+
+# 04.3.4.2 — Test it
 from src.preprocessing import (
     create_categorical_pipeline,
     create_numerical_pipeline,
     create_preprocessor,
+    fit_preprocessor,
     split_features_target,
     split_train_test,
 )
+
 def create_valid_dataframe() -> pd.DataFrame:
     """Create a minimal valid DataFrame for preprocessing tests."""
     data = {}
@@ -190,3 +201,46 @@ def test_preprocessor_uses_correct_feature_groups() -> None:
 
     assert numerical_columns == NUMERICAL_FEATURES
     assert categorical_columns == CATEGORICAL_FEATURES
+
+def test_fit_preprocessor() -> None:
+    """Verify that the preprocessor can fit and transform train/test data."""
+    df = create_valid_dataframe()
+
+    X, y = split_features_target(df)
+
+    X_train, X_test, _, _ = split_train_test(X, y)
+
+    preprocessor = create_preprocessor()
+
+    X_train_processed, X_test_processed = fit_preprocessor(
+        preprocessor,
+        X_train,
+        X_test,
+    )
+
+    assert X_train_processed.shape[0] == len(X_train)
+    assert X_test_processed.shape[0] == len(X_test)
+
+def test_fit_preprocessor_handles_missing_values() -> None:
+    """Verify that preprocessing handles missing values."""
+    df = create_valid_dataframe()
+
+    df = pd.concat([df] * 10, ignore_index=True)
+
+    df.loc[0, "Hours_Studied"] = None
+    df.loc[1, "Gender"] = None
+
+    X, y = split_features_target(df)
+
+    X_train, X_test, _, _ = split_train_test(X, y)
+
+    preprocessor = create_preprocessor()
+
+    X_train_processed, X_test_processed = fit_preprocessor(
+        preprocessor,
+        X_train,
+        X_test,
+    )
+
+    assert X_train_processed.shape[0] == len(X_train)
+    assert X_test_processed.shape[0] == len(X_test)
